@@ -1,0 +1,274 @@
+
+
+Looking for best match in original data
+
+ID: 0 Looking for value between 0 2
+ID: 0 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 0 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 0 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 0 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 0 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 0 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 0 Found value: 0 at position: 2 at sample: [1 1 0 0 0]
+ID: 0 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 0 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 0 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 0 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 0 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 0 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 0 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 0 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 0 Found value: 0 at position: 0 at sample: [0 1 0 0 1]
+ID: 0 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 0 Found value: 0 at position: 2 at sample: [0 1 0 0 1]
+ID: 0 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 0 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 0 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 0 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 0 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 0 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 0 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 0 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 0 Found value: 0 at position: 0 at sample: [0 1 0 0 1]
+ID: 0 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 0 Found value: 0 at position: 2 at sample: [0 1 0 0 1]
+ID: 0 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 0 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 0 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 0 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 0 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 1 Looking for value between 0 1
+ID: 1 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 1 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 1 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 1 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 1 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 1 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 1 Found value: 0 at position: 2 at sample: [1 1 0 0 0]
+ID: 1 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 1 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 1 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 1 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 1 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 1 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 1 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 1 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 1 Found value: 0 at position: 0 at sample: [0 1 0 0 1]
+ID: 1 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 1 Found value: 0 at position: 2 at sample: [0 1 0 0 1]
+ID: 1 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 1 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 1 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 1 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 1 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 1 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 1 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 1 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 1 Found value: 0 at position: 0 at sample: [0 1 0 0 1]
+ID: 1 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 1 Found value: 0 at position: 2 at sample: [0 1 0 0 1]
+ID: 1 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 1 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 1 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 1 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 1 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 2 Looking for value between 0 1
+ID: 2 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 2 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 2 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 2 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 2 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 2 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 2 Found value: 0 at position: 2 at sample: [1 1 0 0 0]
+ID: 2 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 2 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 2 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 2 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 2 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 2 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 2 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 2 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 2 Found value: 0 at position: 0 at sample: [0 1 0 0 1]
+ID: 2 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 2 Found value: 0 at position: 2 at sample: [0 1 0 0 1]
+ID: 2 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 2 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 2 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 2 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 2 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 2 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 2 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 2 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 2 Found value: 0 at position: 0 at sample: [0 1 0 0 1]
+ID: 2 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 2 Found value: 0 at position: 2 at sample: [0 1 0 0 1]
+ID: 2 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 2 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 2 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 2 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 2 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 3 Looking for value between 0 2
+ID: 3 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 3 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 3 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 3 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 3 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 3 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 3 Found value: 0 at position: 2 at sample: [1 1 0 0 0]
+ID: 3 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 3 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 3 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 3 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 3 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 3 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 3 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 3 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 3 Found value: 0 at position: 0 at sample: [0 1 0 0 1]
+ID: 3 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 3 Found value: 0 at position: 2 at sample: [0 1 0 0 1]
+ID: 3 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 3 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 3 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 3 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 3 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 3 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 3 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 3 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 3 Found value: 0 at position: 0 at sample: [0 1 0 0 1]
+ID: 3 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 3 Found value: 0 at position: 2 at sample: [0 1 0 0 1]
+ID: 3 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 3 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 3 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 3 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 3 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 4 Looking for value between 0 2
+ID: 4 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 4 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 4 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 4 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 4 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 4 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 4 Found value: 0 at position: 2 at sample: [1 1 0 0 0]
+ID: 4 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 4 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 4 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 4 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 4 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 4 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 4 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 4 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 4 Found value: 0 at position: 0 at sample: [0 1 0 0 1]
+ID: 4 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 4 Found value: 0 at position: 2 at sample: [0 1 0 0 1]
+ID: 4 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 4 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 4 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 4 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 4 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 4 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 4 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 4 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 4 Found value: 0 at position: 0 at sample: [0 1 0 0 1]
+ID: 4 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 4 Found value: 0 at position: 2 at sample: [0 1 0 0 1]
+ID: 4 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 4 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 4 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 4 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 4 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 5 Looking for value between 0 2
+ID: 5 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 5 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 5 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 5 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 5 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 5 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 5 Found value: 0 at position: 2 at sample: [1 1 0 0 0]
+ID: 5 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 5 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 5 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 5 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 5 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 5 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 5 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 5 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 5 Found value: 0 at position: 0 at sample: [0 1 0 0 1]
+ID: 5 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 5 Found value: 0 at position: 2 at sample: [0 1 0 0 1]
+ID: 5 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 5 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 5 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 5 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 5 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 5 Found value: 0 at position: 0 at sample: [0 0 1 0 1]
+ID: 5 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 5 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully
+ID: 5 Found value: 0 at position: 0 at sample: [0 1 0 0 1]
+ID: 5 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 5 Found value: 0 at position: 2 at sample: [0 1 0 0 1]
+ID: 5 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 5 Match found, target ID: 0 at target position: 3 and target value: 0
+Search ended successfully
+ID: 5 Found value: 0 at position: 0 at sample: [0 0 0 0 0]
+ID: 5 Looking for highest co_ocur match, value between 0 2 with ID: 0
+ID: 5 Match found, target ID: 0 at target position: 1 and target value: 0
+Search ended successfully

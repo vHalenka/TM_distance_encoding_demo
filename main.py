@@ -20,14 +20,17 @@ epochs = 500
 
 
 # Dataset:
-number_of_samples = 100
-number_of_values = 10
+number_of_samples = 50
+number_of_values = 100
 number_of_value_bits = 2
-number_of_distance_bits = 6
+number_of_distance_bits = 4
 k = 3
 
+position_bits = number_of_values
 
-bits_total = number_of_value_bits + number_of_distance_bits
+patch_dim = (1,1)
+bits_total = position_bits + number_of_value_bits + number_of_distance_bits
+
 
 ################################################################################
 ## Dataset generation
@@ -49,8 +52,6 @@ def generate_data(X, Y, k):
 			X[i, pos1] = 1
 			X[i, pos2] = 1
 		Y[i] = class_label
-
-bits_total = number_of_values + number_of_distance_bits
 
 X_train_org = np.zeros((number_of_samples, number_of_values), dtype=np.uint32)
 Y_train = np.zeros(number_of_samples, dtype=np.uint32)
@@ -98,38 +99,42 @@ print("Data with distance (val bits:", number_of_value_bits, "dist bits:", numbe
 print(X_train)
 print(X_test)
 
-def thermometer_to_integer(thermometer_bits, lengths, negated_list):
+def thermometer_to_integer(thermometer_bits, lengths, include_negatives=False):
 	"""
 	thermometer_bits: list of bits in thermometer code (X_train (samples, 1, values, value_bits+distance_bits))
 	lengths: number of bits for each thermometer code (values, distance)
-	negated_list: inverts the search direction for the first 1 in the thermometer code (values, distance)
 	"""
-	therm_pointer = 0
+	if include_negatives:
+		neg = 1
+		lengths = lengths + lengths
+	else:
+		neg = 0
 	result_shape = thermometer_bits.shape[:-1] + (len(lengths),)
 	result = np.zeros(result_shape, dtype=np.uint32)
-	
-	for i, length in enumerate(lengths):
-		negated = negated_list[i]
-		therm_bits_focus = thermometer_bits[..., therm_pointer:therm_pointer+length]
-		for sample in np.ndindex(therm_bits_focus.shape[:-1]):
-			value = 0
-			for bit in range(length):
-				if not negated:
-					if therm_bits_focus[sample + (bit,)]:
-						value = bit + 1
+	for sample_i in np.ndindex(thermometer_bits.shape[:-1]):
+		therm_pointer = 0 
+		for i, length in enumerate(lengths):
+			therm_bits_focus = np.array(thermometer_bits[tuple(sample_i) + (slice(therm_pointer, therm_pointer+length),)], dtype=np.uint32)
+			if neg and i>=len(lengths)//2:
+				value = length
+				bits = range(length)
+			else:
+				value = 0
+				bits = reversed(range(length))
+			for bit in bits:
+				if therm_bits_focus[bit]:
+					value = bit
 				else:
-					if therm_bits_focus[sample + (bit,)]:
-						value = bit + 1
-						break
-					value = length + 1  # if all bits are 0, return max value
-			result[sample + (i,)] = value
-		therm_pointer += length
-	
+					break
+			result[tuple(sample_i) + (i,)] = value
+			therm_pointer += length
+
 	return result
 
+
 print("Thermometer to integer, orig data")
-print(thermometer_to_integer(X_train, [number_of_value_bits, number_of_distance_bits], [0, 0]))
-print(thermometer_to_integer(X_test, [number_of_value_bits, number_of_distance_bits], [0, 0]))
+print(thermometer_to_integer(X_train, [number_of_value_bits, number_of_distance_bits]))
+print(thermometer_to_integer(X_test, [number_of_value_bits, number_of_distance_bits]))
 
 print("X_train", X_train.shape)
 print("Y_train",Y_test.shape)
@@ -144,7 +149,7 @@ print("Y_test",Y_test.shape)
 	s = trial.suggest_int('s', 10, 100)
 	T = trial.suggest_float('T', 0.1, 2.0)
 
-	tm = TMClassifier(clauses, s, T, patch_dim=(1,1), platform='CPU', weighted_clauses=True)
+	tm = TMClassifier(clauses, s, T, patch_dim=patch_dim, platform='CPU', weighted_clauses=True)
 
 	for i in range(100):
 		tm.fit(X_train, Y_train)
@@ -161,17 +166,19 @@ best_accuracy = study.best_value
 print("Best Parameters:", best_params)
 print("Best Accuracy:", best_accuracy)
 #tm = TMClassifier(clauses, best_params[0], best_params[1], platform='CPU')
-#tm = TMClassifier(clauses, 58, 1.5, patch_dim=[1], platform='CPU', weighted_clauses=True)
- """
-print("Training TM with clauses:", clauses)
-tm = TMClassifier(clauses, T=int((np.sqrt(clauses)/2 + 2)*10), s=1.533, patch_dim=(1,1), platform='CPU', weighted_clauses=True)
+#tm = TMClassifier(clauses, 58, 1.5, patch_dim=patch_dim, platform='CPU', weighted_clauses=True) """
+ 
+print("Training TM1 with clauses:", clauses)
+print(X_train.shape, X_train, file=open("X_train.txt", "w"))
+print(X_test.shape, X_test, file=open("X_test.txt", "w"))
+tm = TMClassifier(clauses, T=int((np.sqrt(clauses)/2 + 2)*10), s=13, patch_dim=patch_dim, platform='CPU', weighted_clauses=True)
 for i in range(epochs):
 		tm.fit(X_train, Y_train)
 		if i < epochs//2:
 			accuracy = (tm.predict(X_test) == Y_test).mean()
 		if accuracy == 1:
 			break
-   
+
 ################################################################################
 # Read and Store the clauses
 
@@ -180,11 +187,11 @@ k = 0  # ID
 for Class in range(tm.number_of_classes):
 	class_patches = np.array([], dtype=np.uint64)
 	for Clause in range(tm.number_of_clauses):
-		block = [tm.get_ta_action(Clause, bit, Class) for bit in range(2 * X_train.shape[3])]
+		block = [tm.get_ta_action(Clause, bit, Class) for bit in np.arange(2 * bits_total)]
 		class_patches = np.append(class_patches, block)
 	all_clauses = np.append(all_clauses, class_patches)
 
-all_clauses = all_clauses.reshape(tm.number_of_classes, tm.number_of_clauses, 2 * X_train.shape[3])
+all_clauses = all_clauses.reshape(tm.number_of_classes, tm.number_of_clauses, 2 * bits_total)
 
 
 # Store the clauses using pickle
@@ -202,7 +209,7 @@ print(all_clauses.shape)
 
 #def decode_patches(patches, n_value_bits, n_distance_bits):
 
-all_clauses = thermometer_to_integer(all_clauses, [number_of_value_bits, number_of_distance_bits, number_of_value_bits, number_of_distance_bits], [0, 0, 1, 1])
+all_clauses = thermometer_to_integer(all_clauses, [position_bits, number_of_value_bits, number_of_distance_bits], include_negatives=True)
 
 print("Thermometer to integer from clauses")
 print("value, distance, negated value, negated distance)")
@@ -216,9 +223,9 @@ cc_matrix_org = tm.clause_co_occurrence(X_train)
 cc_matrix = cc_matrix_org.toarray()  # Convert sparse matrix to dense
 
 cc_diagonal = np.diagonal(cc_matrix)
-np.fill_diagonal(cc_matrix, 0)
+np.fill_diagonal(cc_matrix, 0) # Set to zero so it doesnt target itself
 
-print("")        
+print("")
 print("cc_matrix:")
 print(cc_matrix.shape)
 print(cc_matrix)
@@ -261,30 +268,32 @@ def encode_to_therm_with_dist(X, n_value_bits, n_distance_bits): #X in samples, 
 			X_with_dist[sample, 0, i, :n_value_bits] = (value >= np.arange(1, n_value_bits+1)).astype(np.uint32)  
 			
    # store the distance
-
-	print("\n\nLooking for best match in original data\n")
+	f = open('search_log.txt', 'w')
+	print("\n\nLooking for best match in original data\n", file=f)
 	for Class_i, Class in enumerate(all_clauses):
 		for clause_i, clause in enumerate(Class):
 			ID_start = (Class_i*tm.number_of_clauses) + clause_i
-			print("ID:", ID_start, "Looking for value between", clause[0], clause[2])
+			print("ID:", ID_start, "Looking for value between", clause[1], clause[4], file=f)
 			for sample in X_test_org:
 				for value_i, value in enumerate(sample):
-					if (value >= clause[0]) & (value <= clause[2]):
-						print("ID:", ID_start, "Found value:", value, "at position:", value_i, "at sample:", sample)
+					if (value == clause[1]) & (value <= clause[4]):
+						print("ID:", ID_start, "Found value:", value, "at position:", value_i, "at sample:", sample, file=f)
 						best_matches_id = cc_best_matches[ID_start]
 						ID_target = best_matches_id[0] # select first best match
 						target_clause = all_clauses[ID_target//tm.number_of_clauses][ID_target%tm.number_of_clauses]
 						# search for the best match in the original data
-						print("ID:", ID_start, "Looking for highest co_ocur match, value between", target_clause[0], target_clause[2], "with ID:", ID_target)
-						for target_value_i, target_value in enumerate(sample, value_i+1):
-							if (value >= target_clause[0]) & (value <= target_clause[2]):
-								print("ID:", ID_start, "Match found, target ID:", ID_target, "at target position:", target_value_i, "and target value:", target_value)
+						print("ID:", ID_start, "Looking for highest co_ocur match, value between", target_clause[1], target_clause[4], "with ID:", ID_target, file=f)
+						target_value_i = value_i + 1
+						if target_value_i < len(sample):  # Check if target_value_i is within the valid range
+							target_value = sample[target_value_i]
+							if (target_value == target_clause[1]) & (target_value <= target_clause[4]):
+								print("ID:", ID_start, "Match found, target ID:", ID_target, "at target position:", target_value_i, "and target value:", target_value, file=f)
 								
 								# store the value in thermometer code
 								target_therm = (target_value_i-value_i >= np.arange(1, n_distance_bits+1)).astype(np.uint32)
 								# Store the thermometer code after the value
 								X_with_dist[sample, 0, value_i, n_value_bits:] = target_therm
-								print("Search ended successfully")
+								print("Search ended successfully", file=f)
 								break
 	return X_with_dist
 
@@ -293,8 +302,8 @@ X_test2  = encode_to_therm_with_dist(X_test_org,  number_of_value_bits, number_o
 
 ################################################################################
 ## Train second tm with the new data
-print("Training TM with clauses:", clauses)
-tm2 = TMClassifier(clauses, T=int((np.sqrt(clauses)/2 + 2)*10), s=1.533, patch_dim=(1,1), platform='CPU', weighted_clauses=True)
+print("Training TM2 with clauses:", clauses)
+tm2 = TMClassifier(clauses, T=int((np.sqrt(clauses)/2 + 2)*10), s=1.533, patch_dim=patch_dim, platform='CPU', weighted_clauses=True)
 for i in range(epochs):
 		tm2.fit(X_train2, Y_train)
 		if i < epochs//2:
@@ -303,104 +312,38 @@ for i in range(epochs):
 			break
 
 ################################################################################
-# Printouts
+# Printouts TM 1
 np.set_printoptions(threshold=np.inf, linewidth=200, precision=2, suppress=True)
 
-print("\nClass 0 Positive Clauses:\n")
+for class_num in range(tm.number_of_classes):
+	print(f"\nTM1 Class {class_num} Positive Clauses:\n")
+	precision = tm.clause_precision(class_num, 0, X_test, Y_test)
+	recall = tm.clause_recall(class_num, 0, X_test, Y_test)
+	for j in range(clauses//2):
+		print(f"Clause #{j} W:{tm.get_weight(class_num, 0, j)} P:{precision[j]:.2f} R:{recall[j]:.2f} ", end=' ')
+		l = []
+		for k in range(bits_total*2):
+			if tm.get_ta_action(j, k, the_class=class_num, polarity=0):
+				if k < bits_total:
+					l.append(f" x{k}")
+				else:
+					l.append(f"¬x{k-bits_total}")
+		print(" ∧ ".join(l))
 
-precision = tm.clause_precision(0, 0, X_test, Y_test)
-recall = tm.clause_recall(0, 0, X_test, Y_test)
+	print(f"\nTM1 Class {class_num} Negative Clauses:\n")
+	precision = tm.clause_precision(class_num, 1, X_test, Y_test)
+	recall = tm.clause_recall(class_num, 1, X_test, Y_test)
+	for j in range(clauses//2):
+		print(f"Clause #{j} W:{tm.get_weight(class_num, 1, j)} P:{precision[j]:.2f} R:{recall[j]:.2f} ", end=' ')
+		l = []
+		for k in range(bits_total*2):
+			if tm.get_ta_action(j, k, the_class=class_num, polarity=1):
+				if k < bits_total:
+					l.append(f" x{k}")
+				else:
+					l.append(f"¬x{k-bits_total}")
+		print(" ∧ ".join(l))
 
-for j in range(clauses//2):
-	print("Clause #%d W:%d P:%.2f R:%.2f " % (j, tm.get_weight(0, 0, j), precision[j], recall[j]), end=' ')
-	l = []
-	for k in range(bits_total*2):
-		if tm.get_ta_action(j, k, the_class = 0, polarity = 0):
-			if k < bits_total:
-				l.append(" x%d" % (k))
-			else:
-				l.append("¬x%d" % (k-bits_total))
-	print(" ∧ ".join(l))
-
-print("\nClass 0 Negative Clauses:\n")
-
-precision = tm.clause_precision(0, 1, X_test, Y_test)
-recall = tm.clause_recall(0, 1, X_test, Y_test)
-
-for j in range(clauses//2):
-	print("Clause #%d W:%d P:%.2f R:%.2f " % (j, tm.get_weight(0, 1, j), precision[j], recall[j]), end=' ')
-	l = []
-	for k in range(bits_total*2):
-		if tm.get_ta_action(j, k, the_class = 0, polarity = 1):
-			if k < bits_total:
-				l.append(" x%d" % (k))
-			else:
-				l.append("¬x%d" % (k-bits_total))
-	print(" ∧ ".join(l))
-
-print("\nClass 1 Positive Clauses:\n")
-
-precision = tm.clause_precision(1, 0, X_test, Y_test)
-recall = tm.clause_recall(1, 0, X_test, Y_test)
-
-for j in range(clauses//2):
-	print("Clause #%d W:%d P:%.2f R:%.2f " % (j, tm.get_weight(1, 0, j), precision[j], recall[j]), end=' ')
-	l = []
-	for k in range(bits_total*2):
-		if tm.get_ta_action(j, k, the_class = 1, polarity = 0):
-			if k < bits_total:
-				l.append(" x%d" % (k))
-			else:
-				l.append("¬x%d" % (k-bits_total))
-	print(" ∧ ".join(l))
-
-print("\nClass 1 Negative Clauses:\n")
-
-precision = tm.clause_precision(1, 1, X_test, Y_test)
-recall = tm.clause_recall(1, 1, X_test, Y_test)
-
-for j in range(clauses//2):
-	print("Clause #%d W:%d P:%.2f R:%.2f " % (j, tm.get_weight(1, 1, j), precision[j], recall[j]), end=' ')
-	l = []
-	for k in range(bits_total*2):
-		if tm.get_ta_action(j, k, the_class = 1, polarity = 1):
-			if k < bits_total:
-				l.append(" x%d" % (k))
-			else:
-				l.append("¬x%d" % (k-bits_total))
-	print(" ∧ ".join(l))
- 
-print("\nClass 2 Positive Clauses:\n")
-
-precision = tm.clause_precision(2, 0, X_test, Y_test)
-recall = tm.clause_recall(2, 0, X_test, Y_test)
-
-for j in range(clauses//2):
-	print("Clause #%d W:%d P:%.2f R:%.2f " % (j, tm.get_weight(2, 0, j), precision[j], recall[j]), end=' ')
-	l = []
-	for k in range(bits_total*2):
-		if tm.get_ta_action(j, k, the_class = 2, polarity = 0):
-			if k < bits_total:
-				l.append(" x%d" % (k))
-			else:
-				l.append("¬x%d" % (k-bits_total))
-	print(" ∧ ".join(l))
-
-print("\nClass 2 Negative Clauses:\n")
-
-precision = tm.clause_precision(2, 1, X_test, Y_test)
-recall = tm.clause_recall(2, 1, X_test, Y_test)
-
-for j in range(clauses//2):
-	print("Clause #%d W:%d P:%.2f R:%.2f " % (j, tm.get_weight(2, 1, j), precision[j], recall[j]), end=' ')
-	l = []
-	for k in range(bits_total*2):
-		if tm.get_ta_action(j, k, the_class = 2, polarity = 1):
-			if k < bits_total:
-				l.append(" x%d" % (k))
-			else:
-				l.append("¬x%d" % (k-bits_total))
-	print(" ∧ ".join(l))
 
 print("\nClause Co-Occurence Matrix:\n")
 print(tm.clause_co_occurrence(X_test, percentage=True).toarray())
@@ -418,6 +361,50 @@ print("Accuracy for tm:", accuracy_tm*100, "%")
 print("Accuracy for tm2:", accuracy_tm2*100, "%")
 
 
+################################################################################
+# Printouts TM 2
+
+for class_num in range(tm2.number_of_classes):
+	print(f"\nTM2 Class {class_num} Positive Clauses:\n")
+	precision = tm2.clause_precision(class_num, 0, X_test, Y_test)
+	recall = tm2.clause_recall(class_num, 0, X_test, Y_test)
+	for j in range(clauses//2):
+		print(f"Clause #{j} W:{tm2.get_weight(class_num, 0, j)} P:{precision[j]:.2f} R:{recall[j]:.2f} ", end=' ')
+		l = []
+		for k in range(bits_total*2):
+			if tm2.get_ta_action(j, k, the_class=class_num, polarity=0):
+				if k < bits_total:
+					l.append(f" x{k}")
+				else:
+					l.append(f"¬x{k-bits_total}")
+		print(" ∧ ".join(l))
+
+	print(f"\nTM2 Class {class_num} Negative Clauses:\n")
+	precision = tm2.clause_precision(class_num, 1, X_test, Y_test)
+	recall = tm2.clause_recall(class_num, 1, X_test, Y_test)
+	for j in range(clauses//2):
+		print(f"Clause #{j} W:{tm2.get_weight(class_num, 1, j)} P:{precision[j]:.2f} R:{recall[j]:.2f} ", end=' ')
+		l = []
+		for k in range(bits_total*2):
+			if tm2.get_ta_action(j, k, the_class=class_num, polarity=1):
+				if k < bits_total:
+					l.append(f" x{k}")
+				else:
+					l.append(f"¬x{k-bits_total}")
+		print(" ∧ ".join(l))
+
+
+print("\nClause Co-Occurence Matrix:\n")
+print(tm2.clause_co_occurrence(X_test, percentage=True).toarray())
+
+print("\nLiteral Frequency:\n")
+print(tm2.literal_clause_frequency())
+
+print("\nNumber of Literals:\n")
+print(len(tm2.literal_clause_frequency()))
+
+print("Accuracy for tm:", accuracy_tm*100, "%")
+print("Accuracy for tm2:", accuracy_tm2*100, "%")
 ################################################################################
 # Confusion Matrix TM 1
 conf_matrix1 = confusion_matrix(Y_test, tm.predict(X_test))
